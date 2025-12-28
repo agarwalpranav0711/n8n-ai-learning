@@ -1,0 +1,242 @@
+{
+  "name": "First AI agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "86d8d55d-4c91-483f-93a7-4367c1a5b5cc",
+      "name": "When chat message received",
+      "webhookId": "46768b10-a91f-4069-9bf0-9ca384a7e112"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are a helpful assistant\n\nyou always have to look into contact databse before hitting any event or creating any event or sending an email or doing any thing . you need the persons email id in order to do these tasks\n\nnever make up someone email id always look into the contact databse.\n\nhere is current date/time : {{ $now }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f92da306-0c11-4d75-9526-367b319cbc37",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "11e31c82-220b-466d-b5aa-7bbb9196b206",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "qSDJ3f8igsGDXFfI",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "d83a5973-fcea-4d29-9494-9da3cf804ee3",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1-OeJjeHHLTHu5pewvXE9wJcWPzM1XGRsRRDiw9aVarU",
+          "mode": "list",
+          "cachedResultName": "Contact",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-OeJjeHHLTHu5pewvXE9wJcWPzM1XGRsRRDiw9aVarU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-OeJjeHHLTHu5pewvXE9wJcWPzM1XGRsRRDiw9aVarU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        736,
+        320
+      ],
+      "id": "00218e5b-58eb-4c55-a22f-dfa7db849bd2",
+      "name": "Context Database",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "51uCHlUqdcH0BkAN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        320
+      ],
+      "id": "c9d09d4f-c302-4a3b-989b-e9de81559f3b",
+      "name": "Send Email",
+      "webhookId": "8b4d5c4f-8665-4e41-88f4-358a35bee5d4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOMIJuVp7Ie7FSIB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "n8npranav@gmail.com",
+          "mode": "list",
+          "cachedResultName": "n8npranav@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees0_Attendees', ``, 'string') }}"
+          ],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        320
+      ],
+      "id": "0bfc32ad-fbad-489f-871c-55643bb0b740",
+      "name": "Create event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "QHXUQXhVINLIZz50",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Context Database": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "a6fcbf85-c57a-482e-87b0-86240d59f64c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "62f8ca612e968900fb7a8a3894adf56f6da01e39f42288b09badb77c1a420a61"
+  },
+  "id": "uZC7ZlUGmZnXMLms",
+  "tags": []
+}
