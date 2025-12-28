@@ -70,10 +70,9 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1-OeJjeHHLTHu5pewvXE9wJcWPzM1XGRsRRDiw9aVarU",
+          "value": "GOOGLE_SHEET_ID",
           "mode": "list",
-          "cachedResultName": "Contact",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-OeJjeHHLTHu5pewvXE9wJcWPzM1XGRsRRDiw9aVarU/edit?usp=drivesdk"
+         
         },
         "sheetName": {
           "__rl": true,
@@ -129,9 +128,9 @@
       "parameters": {
         "calendar": {
           "__rl": true,
-          "value": "n8npranav@gmail.com",
+          "value": "example@email.com",
           "mode": "list",
-          "cachedResultName": "n8npranav@gmail.com"
+        
         },
         "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
         "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
