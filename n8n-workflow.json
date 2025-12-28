@@ -13,10 +13,9 @@
         "triggerOn": "specificFolder",
         "folderToWatch": {
           "__rl": true,
-          "value": "1ahGo6a1viuykui4zHKDryfWAtrO1m3SR",
+          "value": "GOOGLE_DRIVE_FOLDER_ID",
           "mode": "list",
-          "cachedResultName": "FAQ",
-          "cachedResultUrl": "https://drive.google.com/drive/folders/1ahGo6a1viuykui4zHKDryfWAtrO1m3SR"
+        
         },
         "event": "fileCreated",
         "options": {}
